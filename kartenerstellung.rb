@@ -27,7 +27,7 @@ Squib::Deck.new cards: daten['name'].size, layout: 'layout.yml' do
     pfad = "bilder/#{b}.png"
     File.exist?(pfad) ? pfad : nil
   end
-  png file: png_files, layout: 'art'
+  png file: png_files, layout: 'art', scale: 'fit'
   
   character_werte = (0...daten['name'].size).map do |i|
     "Elixier: #{daten['elexier'][i]}\n" \

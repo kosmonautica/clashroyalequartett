@@ -5,7 +5,7 @@ require 'fileutils'
 require 'nokogiri'
 
 # Konfiguration
-TARGET_HEIGHT = 220  # Maximale Höhe in Pixeln
+TARGET_HEIGHT = 400  # Maximale Höhe in Pixeln
 
 # Erstelle Verzeichnis für Bilder
 FileUtils.mkdir_p('./bilder')
