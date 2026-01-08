@@ -8,11 +8,12 @@ title:
   align: center
 
 art:
-  x: 75
   y: 150
   height: 400
-  align: center
-  valign: top
+
+art_area:
+  x: 75
+  width: 675
 
 description:
   x: 100
