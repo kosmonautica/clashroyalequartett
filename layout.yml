@@ -10,19 +10,16 @@ title:
 art:
   x: 275
   y: 200
-  # width: 300
-  # height: 300
-
 
 description:
   x: 100
-  y: 600
+  y: 550
   width: 625
-  height: 350
-  valign: middle
+  height: 450
+  valign: top
   align: left
-  font_size: 12
-desc: # alias
+  font_size: 11
+desc:
   extends: description
 
 type:
@@ -40,7 +37,7 @@ lower_right:
   font_size: 6
   valign: bottom
   align: right
-lr: #alias
+lr:
   extends: lower_right
 
 lower_left:
@@ -51,7 +48,7 @@ lower_left:
   font_size: 6
   valign: bottom
   align: left
-ll: # alias
+ll:
   extends: lower_left
 
 copyright:
@@ -62,7 +59,6 @@ copyright:
   font_size: 5
   align: center
   valign: bottom
-#aliases for copyright
 copy:
   extends: copyright
 credit:
@@ -70,14 +66,12 @@ credit:
 credits:
   extends: copyright
 
-# The "cut line", without rounded corners
 cut:
   x: 37.5
   y: 37.5
   width: 750
   height: 1050
 
-# The "safe zone" as defined by TheGameCrafter poker cards
 safe:
   x: 75
   y: 75
