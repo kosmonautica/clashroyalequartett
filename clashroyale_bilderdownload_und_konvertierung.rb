@@ -4,6 +4,9 @@ require 'roo'
 require 'fileutils'
 require 'nokogiri'
 
+# Konfiguration
+TARGET_HEIGHT = 220  # Maximale Höhe in Pixeln
+
 # Erstelle Verzeichnis für Bilder
 FileUtils.mkdir_p('./bilder')
 
@@ -68,6 +71,12 @@ begin
       # Lade das Bild
       image_data = URI.open(img_url).read
       image = MiniMagick::Image.read(image_data)
+      
+      # Skaliere das Bild falls nötig
+      if image.height > TARGET_HEIGHT
+        puts "  Skaliere von #{image.width}x#{image.height} auf Höhe #{TARGET_HEIGHT}..."
+        image.resize "x#{TARGET_HEIGHT}"
+      end
       
       # Konvertiere zu PNG
       image.format 'png'

@@ -15,14 +15,6 @@ daten = {
   'seltenheit' => xlsx.column(10).drop(1)
 }
 
-# DEBUG: Prüfe ob seltenheit-Daten vorhanden sind
-puts "=== DEBUG START ==="
-puts "Anzahl Karten: #{daten['name'].size}"
-puts "Seltenheit-Array: #{daten['seltenheit'].inspect}"
-puts "Seltenheit-Länge: #{daten['seltenheit'].size}"
-puts "Erstes Element: #{daten['seltenheit'][0].inspect}"
-puts "=== DEBUG END ==="
-
 Squib::Deck.new cards: daten['name'].size, layout: 'layout.yml' do
 
   background color: 'white'
@@ -30,27 +22,25 @@ Squib::Deck.new cards: daten['name'].size, layout: 'layout.yml' do
   rect layout: 'safe'
   text str: daten['name'], layout: 'title'
   text str: daten['nummer'], layout: 'lower_right'
-  png file: daten['url_pfadname'].map { |b| "bilder/#{b}.png" }, layout: 'art'
+  
+  png_files = daten['url_pfadname'].map do |b|
+    pfad = "bilder/#{b}.png"
+    File.exist?(pfad) ? pfad : nil
+  end
+  png file: png_files, layout: 'art'
   
   character_werte = (0...daten['name'].size).map do |i|
-    text = "Elixier: #{daten['elexier'][i]}\n" \
-           "Anzahl: #{daten['anzahl'][i]}\n" \
-           "Tempo: #{daten['tempo'][i]}\n" \
-           "Reichweite: #{daten['reichweite'][i]}\n" \
-           "Schaden: #{daten['schaden'][i]}\n" \
-           "Leben: #{daten['leben'][i]}\n" \
-           "Seltenheit: #{daten['seltenheit'][i]}"
-    
-    # DEBUG: Zeige jeden generierten Text
-    puts "--- Karte #{i} ---"
-    puts text
-    puts "----------------"
-    
-    text
+    "Elixier: #{daten['elexier'][i]}\n" \
+    "Anzahl: #{daten['anzahl'][i]}\n" \
+    "Tempo: #{daten['tempo'][i]}\n" \
+    "Reichweite: #{daten['reichweite'][i]}\n" \
+    "Schaden: #{daten['schaden'][i]}\n" \
+    "Leben: #{daten['leben'][i]}\n" \
+    "Seltenheit: #{daten['seltenheit'][i]}"
   end
   
   text str: character_werte, layout: 'description'
   text str: 'von Jakob Wiegärtner / Version 0.1', layout: 'credits'
-  save_pdf trim: 37.5, file: 'clash_royale_quartett_brawl_karten.pdf'
+  save_pdf trim: 37.5, file: 'clash_royale_quartett.pdf'
   
 end
