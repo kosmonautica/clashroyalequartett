@@ -35,26 +35,17 @@ Squib::Deck.new cards: daten['name'].size, layout: 'layout.yml' do
   daten['url_pfadname'].each_with_index do |b, i|
     pfad = "bilder/#{b}.png"
     if File.exist?(pfad)
-      # Lade Bild mit MiniMagick um Dimensionen zu ermitteln
+      # Lade Bild um Dimensionen zu ermitteln
       img = MiniMagick::Image.open(pfad)
-      original_width = img.width
-      original_height = img.height
 
-      # Skaliere so, dass Bild in den Bereich passt (max Breite UND max Höhe)
-      scale_by_height = art_h.to_f / original_height
-      scale_by_width = area_w.to_f / original_width
-      scale_factor = [scale_by_height, scale_by_width, 1.0].min  # nie hochskalieren
-      display_width = (original_width * scale_factor).round
-      display_height = (original_height * scale_factor).round
+      # Zentriere horizontal
+      x_pos = center_x - (img.width / 2.0)
 
-      # Berechne x so, dass Bild zentriert ist (linke Kante)
-      x_pos = center_x - (display_width / 2.0)
+      # Zentriere vertikal im art-Bereich
+      y_pos = art_y + ((art_h - img.height) / 2.0)
 
-      # Berechne y so, dass Bild vertikal im art-Bereich zentriert ist
-      y_pos = art_y + ((art_h - display_height) / 2.0)
-
-      # Rendere Bild mit expliziter Breite und Höhe (verhindert Verzerrung)
-      png range: i, file: pfad, x: x_pos, y: y_pos, width: display_width, height: display_height
+      # Rendere Bild in Original-Größe (keine Skalierung)
+      png range: i, file: pfad, x: x_pos, y: y_pos, width: img.width, height: img.height
     end
   end
   
