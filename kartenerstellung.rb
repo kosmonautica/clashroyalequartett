@@ -19,6 +19,10 @@ daten = {
 Squib::Deck.new cards: daten['name'].size, layout: 'layout.yml' do
 
   background color: 'white'
+
+  # Hintergrundbild über die gesamte Karte
+  png file: 'hintergrund.png', x: 0, y: 0, width: 825, height: 1125
+
   rect layout: 'cut'
   rect layout: 'safe'
   text str: daten['name'], layout: 'title'
@@ -60,7 +64,7 @@ Squib::Deck.new cards: daten['name'].size, layout: 'layout.yml' do
   end
   
   text str: character_werte, layout: 'description'
-  text str: 'von Jakob Wiegärtner / Version 0.1', layout: 'credits'
+  text str: "Clash Royale Quartett / Version 0.2\nvon Jakob Wiegärtner", layout: 'credits'
   save_pdf trim: 37.5, file: 'clash_royale_quartett.pdf'
   
 end

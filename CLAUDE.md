@@ -49,6 +49,7 @@ bundle install
 
 ## Regeln
 - **WICHTIG: Keine Code-Änderungen ohne explizite Zustimmung des Users** - Immer zuerst fragen, bevor Dateien bearbeitet werden
+- **Git-Commits: KEINE Hinweise auf Claude Code oder andere LLMs in den Commit-Messages**
 - Excel-Datei darf bearbeitet werden (URLs korrigieren, neue Spalten hinzufügen)
 - Leere `url_pfadname`-Zellen sind normal (Work in Progress)
 - Bilder werden automatisch heruntergeladen und dürfen überschrieben werden
@@ -82,6 +83,7 @@ https://clashroyale.fandom.com/wiki/{url_pfadname}?file={NameOhneLeerzeichen}Car
 - Titel: Zentriert oben
 - Attribute: Linksbündig in Textbereich
 - Kartennummer: Rechts unten
+- Credits: Zentriert unten, zweizeilig ("Clash Royale Quartett / Version 0.2" und "von Jakob Wiegärtner")
 
 ### Attribute auf Karte
 - Elixier

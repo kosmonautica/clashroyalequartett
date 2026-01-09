@@ -57,12 +57,12 @@ ll:
 
 copyright:
   x: 75
-  y: 1025
+  y: 995
   width: 675
-  height: 25
+  height: 55
   font_size: 5
   align: center
-  valign: bottom
+  valign: top
 copy:
   extends: copyright
 credit:
