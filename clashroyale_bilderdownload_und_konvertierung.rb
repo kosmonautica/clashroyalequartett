@@ -35,13 +35,14 @@ begin
   # Verarbeite jeden Namen
   names.each_with_index do |name, index|
     puts "Verarbeite (#{index + 1}/#{names.length}): #{name}"
+    wiki_url = nil
     begin
       # Wiki-Pfad: Leerzeichen durch Unterstriche ersetzen
       wiki_path = name.gsub(' ', '_')
-      
+
       # Dateiname: Leerzeichen entfernen (CamelCase)
       file_name = name.gsub(' ', '')
-      
+
       # Erst die Wiki-Seite laden um die echte Bild-URL zu finden
       wiki_url = "https://clashroyale.fandom.com/wiki/#{wiki_path}?file=#{file_name}Card.png"
       html = URI.open(wiki_url).read
@@ -88,10 +89,10 @@ begin
       puts "✓ Erfolgreich konvertiert und gespeichert als: #{output_filename}"
     rescue OpenURI::HTTPError => e
       puts "✗ Fehler: Bild für '#{name}' konnte nicht gefunden werden (#{e.message})"
-      failed_downloads << name
+      failed_downloads << { name: name, url: wiki_url }
     rescue => e
       puts "✗ Fehler bei '#{name}': #{e.message}"
-      failed_downloads << name
+      failed_downloads << { name: name, url: wiki_url }
     end
     puts ""
   end
@@ -99,7 +100,10 @@ begin
   # Ausgabe der fehlgeschlagenen Downloads
   if failed_downloads.any?
     puts "\nFolgende Bilder konnten nicht heruntergeladen werden:"
-    failed_downloads.each { |name| puts "- #{name}" }
+    failed_downloads.each do |entry|
+      puts "- #{entry[:name]}"
+      puts "  URL: #{entry[:url]}"
+    end
     puts "\nAnzahl fehlgeschlagener Downloads: #{failed_downloads.length}"
   else
     puts "\nAlle Bilder wurden erfolgreich heruntergeladen!"
