@@ -16,6 +16,64 @@ OUTPUT_MODE = :pdf
 SINGLE_CARD_NAME = 'Eisgolem'
 
 # =============================================================================
+# Charakterwert-Positionen (pixelgenau konfigurierbar)
+# =============================================================================
+# Jeder Wert hat: x, y, font_size, align
+# Basierend auf description-Block: x=100, y=550, font_size=8
+
+CHARAKTER_POSITIONEN = {
+  elexier: {
+    label: 'Elixier',
+    x: 190,
+    y: 560,
+    font_size: 8,
+    align: :left
+  },
+  anzahl: {
+    label: 'Anzahl',
+    x: 190,
+    y: 633,
+    font_size: 8,
+    align: :left
+  },
+  tempo: {
+    label: 'Tempo',
+    x: 190,
+    y: 706,
+    font_size: 8,
+    align: :left
+  },
+  reichweite: {
+    label: 'Reichweite',
+    x: 190,
+    y: 779,
+    font_size: 8,
+    align: :left
+  },
+  schaden: {
+    label: 'Schaden',
+    x: 190,
+    y: 852,
+    font_size: 8,
+    align: :left
+  },
+  leben: {
+    label: 'Leben',
+    x: 190,
+    y: 925,
+    font_size: 8,
+    align: :left
+  },
+  seltenheit: {
+    label: 'Seltenheit',
+    x: 190,
+    y: 998,
+    font_size: 8,
+    align: :left
+  }
+}
+
+# =============================================================================
 
 xlsx = Roo::Excelx.new('ClashRoyaleKartendaten.xlsx')
 alle_daten = {
@@ -61,7 +119,7 @@ Squib::Deck.new cards: daten['name'].size, layout: 'layout_neues_design.yml' do
 
   rect layout: 'cut'
   rect layout: 'safe'
-  rect layout: 'art_border'  # Debug-Rahmen für Bildbereich
+  # rect layout: 'art_border'  # Debug-Rahmen für Bildbereich
   text str: daten['name'], layout: 'title'
   text str: daten['nummer'], layout: 'lower_right'
 
@@ -71,7 +129,7 @@ Squib::Deck.new cards: daten['name'].size, layout: 'layout_neues_design.yml' do
   area_x = layout['art_area']['x']
   area_w = layout['art_area']['width']
   center_x = area_x + (area_w / 2.0)
-  
+
   # Rendere jedes Bild einzeln zentriert
   daten['url_pfadname'].each_with_index do |b, i|
     pfad = "bilder/#{b}.png"
@@ -89,29 +147,47 @@ Squib::Deck.new cards: daten['name'].size, layout: 'layout_neues_design.yml' do
       png range: i, file: pfad, x: x_pos, y: y_pos, width: img.width, height: img.height
     end
   end
-  
-  character_werte = (0...daten['name'].size).map do |i|
-    "Elixier: #{daten['elexier'][i]}\n" \
-    "Anzahl: #{daten['anzahl'][i]}\n" \
-    "Tempo: #{daten['tempo'][i]}\n" \
-    "Reichweite: #{daten['reichweite'][i]}\n" \
-    "Schaden: #{daten['schaden'][i]}\n" \
-    "Leben: #{daten['leben'][i]}\n" \
-    "Seltenheit: #{daten['seltenheit'][i]}"
-  end
-  
+
   # Rahmen um den description-Block
-  rect layout: 'description_border'
-  
-  text str: character_werte, layout: 'description'
-  text str: "Clash Royale Quartett / Version 0.2\nvon Jakob Wiegärtner", layout: 'credits'
+  # rect layout: 'description_border'
+
+  # Charakterwerte einzeln rendern (pixelgenau positionierbar)
+  CHARAKTER_POSITIONEN.each do |key, pos|
+    # Hole die Daten für diesen Charakterwert
+    werte = daten[key.to_s].map { |v| "#{pos[:label]}: #{v}" }
+
+    text str: werte,
+         x: pos[:x],
+         y: pos[:y],
+         font_size: pos[:font_size],
+         align: pos[:align]
+  end
+  # text str: "Clash Royale Quartett / Version 0.2\nvon Jakob Wiegärtner", layout: 'credits'
 
   if OUTPUT_MODE == :png
     save_png dir: '_output', prefix: 'test_card_', count_format: ''
     puts "PNG gespeichert in: _output/test_card_.png"
   else
-    save_pdf trim: 37.5, file: 'clash_royale_quartett.pdf'
-    puts "PDF gespeichert: clash_royale_quartett.pdf"
+    pdf_file = 'clash_royale_quartett.pdf'
+    begin
+      save_pdf trim: 37.5, file: pdf_file
+      puts "PDF gespeichert: #{pdf_file}"
+    rescue Errno::EACCES, IOError => e
+      puts "Fehler: PDF ist geöffnet. Schließe und versuche erneut..."
+      # Versuche PDF zu schließen (Windows-spezifisch)
+      system("taskkill /F /IM AcroRd32.exe 2>nul")
+      system("taskkill /F /IM Acrobat.exe 2>nul")
+      system("taskkill /F /IM FoxitReader.exe 2>nul")
+      system("taskkill /F /IM SumatraPDF.exe 2>nul")
+      sleep 1
+      begin
+        save_pdf trim: 37.5, file: pdf_file
+        puts "PDF gespeichert: #{pdf_file}"
+      rescue => e2
+        puts "Fehler beim Speichern: #{e2.message}"
+        puts "Bitte schließe das PDF manuell und führe das Script erneut aus."
+      end
+    end
   end
 
 end

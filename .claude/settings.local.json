@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(ruby:*)",
-      "Bash(magick identify:*)",
-      "Bash(powershell -Command \"cd ''C:\\\\Users\\\\Udo\\\\Documents\\\\github\\\\clashroyalequartett''; ruby -e \"\"require ''mini_magick''; %w[Berserkerin Bogenschützinnen Kobolde Bomber Feuergeist].each{|n| img = MiniMagick::Image.open\\(''bilder/'' + n + ''.png''\\); puts n + '': '' + img.width.to_s + ''x'' + img.height.to_s}\"\"\")"
-    ]
-  }
-}
