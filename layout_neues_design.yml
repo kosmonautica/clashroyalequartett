@@ -1,0 +1,102 @@
+#This layout inspired by popular economy games
+title:
+  x: 90
+  y: 90
+  width: 635
+  height: 50
+  font_size: 16
+  align: center
+
+art:
+  y: 170
+  height: 350
+
+art_area:
+  x: 75
+  width: 675
+
+art_border:
+  x: 75
+  y: 170
+  width: 675
+  height: 350
+  stroke_color: 'red'
+  stroke_width: 1
+
+description:
+  x: 100
+  y: 550
+  width: 625
+  height: 450
+  valign: top
+  align: left
+  font_size: 8
+
+description_border:
+  x: 100
+  y: 550
+  width: 625
+  height: 450
+  stroke_color: 'black'
+  stroke_width: 1
+
+desc:
+  extends: description
+
+type:
+  x: 90
+  y: 955
+  width: 645
+  height: 50
+  align: center
+
+lower_right:
+  x: 650
+  y: 950
+  width: 75
+  height: 75
+  font_size: 6
+  valign: bottom
+  align: right
+lr:
+  extends: lower_right
+
+lower_left:
+  x: 75
+  y: 975
+  width: 75
+  height: 75
+  font_size: 6
+  valign: bottom
+  align: left
+ll:
+  extends: lower_left
+
+copyright:
+  x: 75
+  y: 995
+  width: 675
+  height: 55
+  font_size: 5
+  align: center
+  valign: top
+copy:
+  extends: copyright
+credit:
+  extends: copyright
+credits:
+  extends: copyright
+
+cut:
+  x: 37.5
+  y: 37.5
+  width: 750
+  height: 1050
+
+safe:
+  x: 75
+  y: 75
+  width: 675
+  height: 975
+  radius: 16
+  dash: 3 3

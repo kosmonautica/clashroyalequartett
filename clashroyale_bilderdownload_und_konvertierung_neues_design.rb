@@ -5,7 +5,12 @@ require 'fileutils'
 require 'nokogiri'
 
 # Konfiguration
-TARGET_HEIGHT = 330  # Maximale Höhe in Pixeln
+TARGET_HEIGHT = 350  # Maximale Höhe in Pixeln
+
+# Bild-Modus: :card oder :card_render
+# :card        -> {Name}Card.png (z.B. BarbarianBarrelCard.png)
+# :card_render -> {Name}_card_render.png (z.B. Barbarian_Barrel_card_render.png)
+IMAGE_MODE = :card_render
 
 # Erstelle Verzeichnis für Bilder
 FileUtils.mkdir_p('./bilder')
@@ -44,20 +49,29 @@ begin
       # Dateiname: Leerzeichen entfernen (CamelCase)
       file_name = name.gsub(' ', '')
 
+      # Bild-Dateiname je nach Modus
+      if IMAGE_MODE == :card_render
+        image_filename = "#{wiki_path}_card_render.png"
+        search_pattern = '_card_render'
+      else
+        image_filename = "#{file_name}Card.png"
+        search_pattern = "#{file_name}Card"
+      end
+
       # Erwartete Bild-URL (für Fehlerausgabe)
-      img_url = "https://static.wikia.nocookie.net/clashroyale/images/X/XX/#{file_name}Card.png/revision/latest"
+      img_url = "https://static.wikia.nocookie.net/clashroyale/images/X/XX/#{image_filename}/revision/latest"
 
       # Erst die Wiki-Seite laden um die echte Bild-URL zu finden
-      wiki_url = "https://clashroyale.fandom.com/wiki/#{wiki_path}?file=#{file_name}Card.png"
+      wiki_url = "https://clashroyale.fandom.com/wiki/#{wiki_path}?file=#{image_filename}"
       html = URI.open(wiki_url).read
       doc = Nokogiri::HTML(html)
-      
+
       # Suche nach der direkten Bild-URL im HTML
-      img_tag = doc.at_css("img[data-image-name='#{file_name}Card.png']")
-      
+      img_tag = doc.at_css("img[data-image-name='#{image_filename}']")
+
       if img_tag.nil?
         # Alternativ: Suche nach dem Bild im Media-Viewer
-        img_tag = doc.at_css("a.image img[src*='#{file_name}Card']")
+        img_tag = doc.at_css("a.image img[src*='#{search_pattern}']")
       end
       
       if img_tag.nil?
