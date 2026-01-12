@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ren:*)",
+      "Bash(ls:*)",
+      "Bash(dir \"C:\\\\Users\\\\Udo\\\\Documents\\\\github\\\\clashroyalequartett\\\\*.png.png\")"
+    ]
+  }
+}

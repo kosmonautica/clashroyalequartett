@@ -25,49 +25,49 @@ CHARAKTER_POSITIONEN = {
   elexier: {
     label: 'Elixier',
     x: 190,
-    y: 560,
+    y: 526,
     font_size: 8,
     align: :left
   },
   anzahl: {
     label: 'Anzahl',
     x: 190,
-    y: 633,
+    y: 599,
     font_size: 8,
     align: :left
   },
   tempo: {
     label: 'Tempo',
     x: 190,
-    y: 706,
+    y: 672,
     font_size: 8,
     align: :left
   },
   reichweite: {
     label: 'Reichweite',
     x: 190,
-    y: 779,
+    y: 745,
     font_size: 8,
     align: :left
   },
   schaden: {
     label: 'Schaden',
     x: 190,
-    y: 852,
+    y: 818,
     font_size: 8,
     align: :left
   },
   leben: {
     label: 'Leben',
     x: 190,
-    y: 925,
+    y: 891,
     font_size: 8,
     align: :left
   },
   seltenheit: {
     label: 'Seltenheit',
     x: 190,
-    y: 998,
+    y: 964,
     font_size: 8,
     align: :left
   }
@@ -114,7 +114,11 @@ Squib::Deck.new cards: daten['name'].size, layout: 'layout_neues_design.yml' do
 
   background color: 'white'
 
-  # Hintergrundbild über die gesamte Karte
+  # Ebene 1: Seltenheits-Hintergrundbild (abhängig von der Seltenheit der Karte)
+  seltenheits_bilder = daten['seltenheit'].map { |s| "#{s}.png" }
+  png file: seltenheits_bilder, x: 0, y: 0, width: 825, height: 1125
+
+  # Ebene 2: Hintergrundbild über die gesamte Karte
   png file: 'hintergrund2.png', x: 0, y: 0, width: 825, height: 1125
 
   rect layout: 'cut'
@@ -140,8 +144,8 @@ Squib::Deck.new cards: daten['name'].size, layout: 'layout_neues_design.yml' do
       # Zentriere horizontal
       x_pos = center_x - (img.width / 2.0)
 
-      # Zentriere vertikal im art-Bereich
-      y_pos = art_y + ((art_h - img.height) / 2.0)
+      # Ausrichtung unten im art-Bereich
+      y_pos = art_y + (art_h - img.height)
 
       # Rendere Bild in Original-Größe (keine Skalierung)
       png range: i, file: pfad, x: x_pos, y: y_pos, width: img.width, height: img.height
