@@ -84,6 +84,8 @@ https://clashroyale.fandom.com/wiki/{url_pfadname}?file={NameOhneLeerzeichen}Car
 - Attribute: Linksbündig in Textbereich
 - Kartennummer: Rechts oben
 - Credits: Zentriert unten, zweizeilig ("Clash Royale Quartett / Version 0.2" und "von Jakob Wiegärtner")
+- Hintergrundbild: `hintergrund.png` (825 × 1125 px)
+- Layout-Datei: `layout.yml`
 
 ### Attribute auf Karte
 - Elixier
@@ -120,22 +122,24 @@ Bei PNG-Export wird `SINGLE_CARD_NAME` verwendet, um die zu generierende Karte a
 ### Charakterwert-Positionen (CHARAKTER_POSITIONEN)
 Jeder Attributwert ist pixelgenau konfigurierbar mit: `x`, `y`, `font_size`, `align`, `label`
 
-Aktuelle Positionen (x=190, y-Abstand=73px):
+Aktuelle Positionen (x=190, y-Abstand=73px, font_size=8):
 
 | Attribut | x | y |
 |----------|---|---|
-| Elixier | 190 | 560 |
-| Anzahl | 190 | 633 |
-| Tempo | 190 | 706 |
-| Reichweite | 190 | 779 |
-| Schaden | 190 | 852 |
-| Leben | 190 | 925 |
-| Seltenheit | 190 | 998 |
+| Elixier | 190 | 526 |
+| Anzahl | 190 | 599 |
+| Tempo | 190 | 672 |
+| Reichweite | 190 | 745 |
+| Schaden | 190 | 818 |
+| Leben | 190 | 891 |
+| Seltenheit | 190 | 964 |
 
 ### Besonderheiten
-- Hintergrundbild: `hintergrund2.png` (825 × 1125 px)
-- Bilder werden in Originalgröße gerendert und horizontal+vertikal im art_area zentriert
+- **Ebene 1**: Seltenheits-Hintergrundbild (`{Seltenheit}.png`, z.B. `Gewöhnlich.png`, `Selten.png`, etc.)
+- **Ebene 2**: Hintergrundbild `hintergrund2.png` (825 × 1125 px) - überlagert Seltenheits-Hintergrund
+- Bilder werden in Originalgröße gerendert, horizontal zentriert und **unten ausgerichtet** im art_area
 - Debug-Rahmen (auskommentierbar): `art_border` (rot), `description_border` (schwarz)
+- Credits-Zeile ist derzeit auskommentiert
 - PNG-Output: `_output/test_card_.png`
 - PDF-Output: `clash_royale_quartett.pdf` (mit 37.5px Trim)
 - **PDF-Retry-Logik**: Bei gesperrter PDF-Datei werden automatisch gängige PDF-Reader geschlossen (Adobe Reader, Acrobat, Foxit, SumatraPDF) und das Speichern erneut versucht
